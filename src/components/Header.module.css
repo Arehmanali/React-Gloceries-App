@@ -1,0 +1,8 @@
+.appHeader {
+  background-color: darkcyan;
+  color: white;
+  padding: 0.5% 10%;
+  margin: 0px;
+  display: flex;
+  text-align: center;
+}
