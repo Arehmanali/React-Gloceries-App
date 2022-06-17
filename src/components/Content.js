@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import classes from "./Content.module.css";
 import { FaTrashAlt } from "react-icons/fa";
 
+import OrderContext from "../store/order-context";
+
 const Content = () => {
+  const cartOrderCtx = useContext(OrderContext);
+
   const [item, setItem] = useState([
     { id: 1, checked: false, item: "item 1" },
     { id: 2, checked: false, item: "item 2" },
@@ -13,14 +17,19 @@ const Content = () => {
     const listItem = item.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
+
     setItem(listItem);
-    localStorage.setItem("shopinglist", JSON.stringify(listItem));
+    cartOrderCtx.addToCart();
+    localStorage.setItem("shoppinglist", JSON.stringify(listItem));
   };
 
   const handleDeleteBtn = (id) => {
     const listItem = item.filter((item) => item.id !== id);
     setItem(listItem);
-    localStorage.setItem("shopinglist", JSON.stringify(listItem));
+
+    cartOrderCtx.removeFromCart();
+
+    localStorage.setItem("shoppinglist", JSON.stringify(listItem));
   };
 
   return (
