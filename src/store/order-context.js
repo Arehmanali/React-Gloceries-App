@@ -1,10 +1,6 @@
 import { createContext, useState } from "react";
 
-const OrderContext = createContext({
-  totalCartOrders: 0,
-  addToCart: () => {},
-  removeFromCart: () => {},
-});
+export const OrderContext = createContext({});
 
 export function OrderContextProvider(props) {
   const [cartOrders, setCartOrders] = useState(0);
@@ -17,7 +13,8 @@ export function OrderContextProvider(props) {
   }
 
   const context = {
-    totalCartOrders: cartOrders.length,
+    cartOrders,
+    setCartOrders,
     addToCart: addToCartHandler,
     removeFromCart: removeFromCartHandler,
   };
@@ -29,4 +26,4 @@ export function OrderContextProvider(props) {
   );
 }
 
-export default OrderContext;
+export default OrderContextProvider;
