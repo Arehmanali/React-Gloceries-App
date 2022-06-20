@@ -6,7 +6,6 @@ import { OrderContext } from "../store/order-context";
 
 const Header = () => {
   const cartOrdersCtx = useContext(OrderContext);
-  console.log(cartOrdersCtx);
 
   return (
     <header className={classes.header}>
