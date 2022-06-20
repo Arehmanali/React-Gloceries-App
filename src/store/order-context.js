@@ -3,7 +3,13 @@ import { createContext, useState } from "react";
 export const OrderContext = createContext({});
 
 export function OrderContextProvider(props) {
-  const [cartOrders, setCartOrders] = useState(0);
+  const [cartOrders, setCartOrders] = useState(getItemsCount);
+
+  function getItemsCount() {
+    const listItems = JSON.parse(localStorage.getItem("shoppinglist"));
+    const count = listItems.filter((item) => item.checked === true);
+    return count.length;
+  }
 
   function addToCartHandler() {
     setCartOrders(cartOrders + 1);

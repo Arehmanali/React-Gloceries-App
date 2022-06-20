@@ -9,11 +9,9 @@ const Content = () => {
   const cartOrderCtx = useContext(OrderContext);
   const [newItem, setNewItem] = useState("");
 
-  const [items, setItem] = useState([
-    { id: 1, checked: false, item: "item 1" },
-    { id: 2, checked: false, item: "item 2" },
-    { id: 3, checked: false, item: "item 3" },
-  ]);
+  const [items, setItem] = useState(
+    JSON.parse(localStorage.getItem("shoppinglist"))
+  );
 
   function isItemChecked(item) {
     return item.checked
