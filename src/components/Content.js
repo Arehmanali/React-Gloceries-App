@@ -4,10 +4,12 @@ import { FaTrashAlt } from "react-icons/fa";
 
 import { OrderContext } from "../store/order-context";
 import AddItem from "./AddItem";
+import SearchItems from "./SearchItems";
 
 const Content = () => {
   const cartOrderCtx = useContext(OrderContext);
   const [newItem, setNewItem] = useState("");
+  const [search, setSearch] = useState("");
 
   const [items, setItem] = useState(
     JSON.parse(localStorage.getItem("shoppinglist"))
@@ -45,7 +47,7 @@ const Content = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
+  console.log(items);
   return (
     <main className={classes.main}>
       <h1>Gloceries List</h1>
@@ -55,41 +57,47 @@ const Content = () => {
         handleSubmit={handleSubmit}
         addItem={addItem}
       />
+
+      <SearchItems search={search} setSearch={setSearch} />
+
       <div>
         {items.length ? (
           <ul>
-            {items.map((item) => (
-              <li className={classes.item} key={item.id}>
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => {
-                    handleCheckBox(item.id);
-                    isItemChecked(item);
-                  }}
-                ></input>
-                <label
-                  style={
-                    item.checked ? { textDecoration: "line-through" } : null
-                  }
-                  onDoubleClick={() => {
-                    handleCheckBox(item.id);
-                  }}
-                >
-                  {item.item}
-                </label>
-                <FaTrashAlt
-                  role="button"
-                  onClick={() => {
-                    handleDeleteBtn(item.id);
-                    if (item.checked) {
-                      isItemChecked(item);
-                    }
-                  }}
-                  tabIndex="0"
-                />
-              </li>
-            ))}
+            {items.map(
+              (item) =>
+                item.item.toLowerCase().includes(search.toLowerCase()) && (
+                  <li className={classes.item} key={item.id}>
+                    <input
+                      type="checkbox"
+                      checked={item.checked}
+                      onChange={() => {
+                        handleCheckBox(item.id);
+                        isItemChecked(item);
+                      }}
+                    ></input>
+                    <label
+                      style={
+                        item.checked ? { textDecoration: "line-through" } : null
+                      }
+                      onDoubleClick={() => {
+                        handleCheckBox(item.id);
+                      }}
+                    >
+                      {item.item}
+                    </label>
+                    <FaTrashAlt
+                      role="button"
+                      onClick={() => {
+                        handleDeleteBtn(item.id);
+                        if (item.checked) {
+                          isItemChecked(item);
+                        }
+                      }}
+                      tabIndex="0"
+                    />
+                  </li>
+                )
+            )}
           </ul>
         ) : (
           <p style={{ margin: "2rem", color: "darkred" }}>
