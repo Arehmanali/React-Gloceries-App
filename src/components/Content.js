@@ -47,7 +47,7 @@ const Content = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-  console.log(items);
+
   return (
     <main className={classes.main}>
       <h1>Gloceries List</h1>
@@ -58,11 +58,10 @@ const Content = () => {
         addItem={addItem}
       />
 
-      <SearchItems search={search} setSearch={setSearch} />
-
       <div>
         {items.length ? (
           <ul>
+            <SearchItems search={search} setSearch={setSearch} />
             {items.map(
               (item) =>
                 item.item.toLowerCase().includes(search.toLowerCase()) && (
